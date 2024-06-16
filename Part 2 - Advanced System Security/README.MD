@@ -325,7 +325,6 @@ ACtually, the Meltdown attack is an attack on the speculative execution engine.
 
 * CPU basics
     - A long, long time ago, CPUs were following a very simple fetch, decode, execute cycle for instructions
-
     ![Local Image](/images/channels/C1.PNG)
 
     - Of course, that was not that efficient and you can get much more efficiency by doing pipelining where while you fetch, you are decoding previous instruction and executing the instruction before that. We saw in computation structures the classic pipeline architecture.
@@ -383,7 +382,7 @@ ACtually, the Meltdown attack is an attack on the speculative execution engine.
     - But there are no dependies between certains executions
 
     ![Local Image](/images/channels/C9.PNG)
-    
+
     - You could move some instructions to empty slots of previous stages and so on.
     - You can execute the code in 3 cycles. You have to execute the instructions in a out-of-order way.
     - Every modern, CPU or a lot of them, uses those techniques and execute code out-of-order. But all the instructions must be shown in order so that as a user and a programmer, you actually don't see that those instructions are executed out-of-order. What you get is that the code that otherwise would have taken 6 cycles has taken 3 cycles to be executed. You have a big performance gain.
