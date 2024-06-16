@@ -326,7 +326,7 @@ Actually, the Meltdown attack is an attack on the speculative execution engine.
 * CPU basics
     - A long, long time ago, CPUs were following a very simple fetch, decode, execute cycle for instructions
 
-    ![Local Image](channels/C1.PNG)
+    ![Local Image](/images/channels/C1.PNG)
     
     - Of course, that was not that efficient and you can get much more efficiency by doing pipelining where while you fetch, you are decoding previous instruction and executing the instruction before that. We saw in computation structures the classic pipeline architecture.
 
@@ -700,6 +700,7 @@ The attack is not only on the system call interface but also all over C++. That 
 * Spectre 2 : Retpoline for Jump *%r11
 The way it works is this : if you have a jump to an indirect target, that is the jump %r11 implementations, before the attack, what the compiler would have done was to simply issue this instruction as such and what this instruction does is that in the register 11, you actually have the address where the target address is in memory. So that you indirect through the value inside r11 to go and fetch, so, inside the register, you have the address in main memory where the address of the target is.
 Instead of just issuing this assembly instruction or corresponding machine instruction which the compiler use to do, what it will do is replace that instruction with the little code as shown.
+
 ![Local Image](/images/channels/C44.PNG)
 
 It will do a direct call to `set_up`. The target for `set_up` is actually in the instruction, so no speculation here. And when you do a call to a function and here this is a function call in a sense, the return address from the call which in this example should be the address of the `capture`, should be put on the stack. What the compiler does here in the `set_up`, what the `set_up` does, it says the return address, I don't want the one that is done by the call instruction, I want you to move into the stack at the place where there is a return address, I want you to move the value that you find by indirecting through the register 11. This move instruction here will place the target address in the stack at the place where the return address from the `set_up` function is.
