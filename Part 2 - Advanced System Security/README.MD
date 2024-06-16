@@ -326,11 +326,11 @@ Actually, the Meltdown attack is an attack on the speculative execution engine.
 * CPU basics
     - A long, long time ago, CPUs were following a very simple fetch, decode, execute cycle for instructions
 
-        ![Local Image](/images/channels/C1.PNG)
+    ![Local Image](/images/channels/C1.PNG)
     
     - Of course, that was not that efficient and you can get much more efficiency by doing pipelining where while you fetch, you are decoding previous instruction and executing the instruction before that. We saw in computation structures the classic pipeline architecture.
 
-        ![Local Image](/images/channels/C2.PNG)
+    ![Local Image](/images/channels/C2.PNG)
 
 * The Trouble With Memory
     - The trouble with modern computers is memory because modern CPU will probably have several cores that are running somehow around 3 GHz but RAM access latency is still about a 100 nanoseconds. So, if you do the maths by looking at the period of a clock cycle of a CPU and you compare that to the RAL lantency, you quickly realise that RAM access takes about 300 compute cycles from the CPU perspective. So, going to memory is very expensive. You would have to stall the CPU for several hundreds cycles, which isn't good for performance obviously.
