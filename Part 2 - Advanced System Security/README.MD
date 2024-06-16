@@ -36,7 +36,7 @@ Vincent Jacquot
 
 * The Problem
 
-![Local Image](/images/trusted/1.PNG)
+![Local Image](/images/trusted/T1.PNG)
 
 The data owner who wants to run some program and of course if you run a program, you should only run it if you trust it (which is why OpenSource is better than Closed Source because you can trust that a lot of eyeballs have had a look at it and tried to find issues with it).
 That person wants to run its program on its data on somebody else's computer. The problem is that the data owner doesn't necessarilly trust the infrastructure owner (person who owns the computer where you run the computations).
@@ -77,7 +77,7 @@ So, let's go back to the medical image analysis. What you might want to do is ha
 
 * Trust hardware manufacturer
 
-![Local Image](/images/trusted/2.PNG)
+![Local Image](/images/trusted/T2.PNG)
 
 The change is that we are gonna be in the trust the hardware manufacturer.
 The data owner and software provider still. The infrastructure owner still is not trusted but the data owner also trust the hardware manufacturer and hardware manufacturer builds the CPU.
@@ -125,7 +125,7 @@ Pretty much everything is done because absolutely nothing is trusted on the remo
     - The metadata is the EPCM which is also of course used for security checks
     - EPC is essentially a set of pages in PRM to be used by the enclaves
     
-    ![Local Image](/images/trusted/3.PNG)
+    ![Local Image](/images/trusted/T3.PNG)
     - How big is the PRM in general ? It depends on how many enclaves you want to support. You can configure how many enclaves you want to support (this is configurable) but if you are a cloud provider that is making a business out of providing trusted computing platform that could run into the multi gigabits but if the use of enclaves is fairly rare, then it could a few Kbits to Mbits. Configurable by the CPU. Priviledge memory was also configurable as a reminders
 
 Remember that L1 cache is typically 32 Kb to 64 KB per core. L2 cache is typically 256 KB to 1 MB per core and L3 cache is typically 2 MB to 64 MB shared among cores in a CPU.
@@ -180,11 +180,11 @@ Staging the evicted EPC pages swapped from PRM to DRAM first, rather then direct
 
 ##### Software Attestation
 
-![Local Image](/images/trusted/4.PNG)
+![Local Image](/images/trusted/T4.PNG)
 
 We are going to go through how and why it works.
 
-![Local Image](/images/trusted/5.PNG)
+![Local Image](/images/trusted/T5.PNG)
 
 First big component of the software attestation mechanism is the hardware manufacturer that you need to trust this guy and essentially, what the hardware manufacturer does in trusted computing is operate as a certification authority. So you have seen certificate and certification chains in computer security course. So essentially, what this means is the hardware manufacturer will generate a pair of asymmetric keys. Keep its private key private and have a public key (trusted public key) and this pair of keys will essentially make up the route key of the whole trust chain in the system. Obviously, this is a classical trust chain as we have them deployed these days with all certificates. That chain is only as secure as the private root key of the manufacturer. We need to trust that, the manufacturer root key, because if we don't, we are not trusting the trust chain and no trust at all is possible. The manufacturer is the intel, sort of.
 
@@ -196,13 +196,13 @@ For the moment, it is a classic certification chain applied to a pair of public/
 
 This is where we see that for the whole thing to hold the hardware manufacturer must be trusted.
 
-![Local Image](/images/trusted/6.PNG)
+![Local Image](/images/trusted/T6.PNG)
 
 We talked about that pair of attestation key. Those keys, especially the private key used by the CPU must be burned during manufacturing. So when the CPU leaves, that private key must be inside it and the correpsonding endorsement certificate (containing the public key corresponding to that private key) too. Instead the manufacturer could have put the public key inside a public key infrastructure owned by the manufacturer.
 
 When we say that the private key is in the tamper-resistant hardware, the idea is that it should be unrecoverable by anything except by the CPU itself. How much you can build those tamper-resistant hardware to resist reverse engineering and so on and so forth is another question.
 
-![Local Image](/images/trusted/7.PNG)
+![Local Image](/images/trusted/T7.PNG)
 
 Remember that the untrusted system software asks the CPU to copy the untrusted pages that contained the initial state of the enclave into the enclav. So, while doing this, the CPU actually can hash the content of those pages. The CPU, while it is building the enclave essentially computes a secure hash of the content of the enclave. So, CPU has computed what we called the "Measurement", essentially a hash of the enclave image which was computed at load time.
 
@@ -236,7 +236,7 @@ So, the CPU has computed a hash of the enclave image and it will add that hash i
 
 You should be able to convince yourself that this is enough as long as the private key is safe, to ensure that the untrusted software system has not changed the code and associated data to be loaded into the enclave. If the untrusted system software had tampered with the code or the initialization data, then the content of the enclave would be different than what was intended by the remote client and then that measurement sent back to the remote client would not be what is expected by the client and therefore, client would reject the attestation and abandon the secure enclave on the remote system.
 
-![Local Image](/images/trusted/8.PNG)
+![Local Image](/images/trusted/T8.PNG)
 
 The remote client needs a secure channel with the enclave because the secure data or confidential data is not there yet. So you need a secure channel for the remote client to send the confidential data to the enclave so that secure computation can be run on it. Part of the attestation is also the data and that data is essentially a hash of a key exchange protocoll that happens between the verifier (the remote client) and the enclave. To exchange the encryption key for the secure channel between the enclave and the remote client, you use the classic Diffie-Hellman key exchange.
 
@@ -244,7 +244,7 @@ Diffie-Hellman : each side  send publicly a message containing a publicly visibl
 
 Those key exchange messages are hashed together and are added to the attestation.
 
-![Local Image](/images/trusted/9.PNG)
+![Local Image](/images/trusted/T9.PNG)
 
 This attestation is signed by the CPU and is sent back to the remote client who can verify the signature and decide if the remote system has tampered with any of the code, the initial data and or the key exchange that happened between itself and the enclave.
 
@@ -301,7 +301,7 @@ As it trusts the CPU manufacturer, it can trust the Secure Container with all th
     But now, the kernel is untrusted, so this guy could be rogue and what he might do is actually mount the attack we have just seen with two pages and swap them back in but swap the frames in which those pages are reloaded. It will update the page tables but it could not tell the CPU that actually the mappings have changed because the attack is to actually swap the content of the two pages to get the enclave to do some thing that it shouldn't do, it shouldn't have disclose and vice-versa. 
     To defend against that, the only thing you can do is not trust the potentially rogue system software to do the right thing and tell the CPU to invalidate the corresponding TLB entries. You cannot rely on the system software to do the right thing. So the defence is that whenever a page is evicted from the PRM and remember, the CPU knows that because the CPU must encrypt that page, so you have  special instruction on the CPU that the system software uses to tell the CPU eject this page. When this happens, the CPU automatically shootdowns (meaning invalidates) all the TLB entries in all the TLBs on the system corresponding to the virtual address in the corresponding asid? of the page being evicted. The CPU does it systematically and does not rely anymore on the system software to do it because you don't trust the system software.
 
-    ![Local Image](/images/trusted/10.PNG)
+    ![Local Image](/images/trusted/T10.PNG)
 
 * Attacking on Enclaves
     - The only thing you trust in the remote system is the CPU, anything else can be a potential adversery. So the attack surface on enclaves is actually huge.
@@ -325,11 +325,11 @@ ACtually, the Meltdown attack is an attack on the speculative execution engine.
 * CPU basics
     - A long, long time ago, CPUs were following a very simple fetch, decode, execute cycle for instructions
 
-    ![Local Image](/images/channels/1.PNG)
+    ![Local Image](/images/channels/C1.PNG)
 
     - Of course, that was not that efficient and you can get much more efficiency by doing pipelining where while you fetch, you are decoding previous instruction and executing the instruction before that. We saw in computation structures the classic pipeline architecture.
 
-    ![Local Image](/images/channels/2.PNG)
+    ![Local Image](/images/channels/C2.PNG)
 
 * The Trouble With Memory
     - The trouble with modern computers is memory because modern CPU will probably have several cores that are running somehow around 3 GHz but RAM access latency is still about a 100 nanoseconds. So, if you do the maths by looking at the period of a clock cycle of a CPU and you compare that to the RAL lantency, you quickly realise that RAM access takes about 300 compute cycles from the CPU perspective. So, going to memory is very expensive. You would have to stall the CPU for several hundreds cycles, which isn't good for performance obviously.
@@ -353,35 +353,35 @@ ACtually, the Meltdown attack is an attack on the speculative execution engine.
     - You have those executions units at the microcode level (micro operations level) and there is a lot of parallelism there. Intel replicates functional units there so that they can have different functional units executing in parallel for different instructions. They call them executions units here but in computation structures, that was called functional units. There were these reservation stations wihch were just buffers implementing queues to basically access those units.
     - We are going to talk with high level instructions but what we will talk about actually applies to the micro operations.
 
-    ![Local Image](/images/channels/3.PNG)
+    ![Local Image](/images/channels/C3.PNG)
 
 * The Case for ILP
     - What is Instruction Level Parallelism ?
     - We have this kind of very simple piece of code where we have 6 instructions that don't that much but illustrate the point. If values are in registers and we can do one operation per CPU cycle, then this code will take 6 cycles.
 
-    ![Local Image](/images/channels/4.PNG)
+    ![Local Image](/images/channels/C4.PNG)
     - We could go "superscalar" if we have several execution units and use only 3 cycles if values are in registers and two opertions can be done per cycle.
     - A superscalar processor is an advanced type of CPU architecture that aims to exploit instruction-level parallelism by executing multiple instructions simultaneously within a single clock cycle. It achieves this through multiple execution units, dynamic scheduling, and techniques to handle instruction dependencies. While it offers significant performance advantages, the complexity and diminishing returns present challenges in its design and implementation.
 
-    ![Local Image](/images/channels/5.PNG)
+    ![Local Image](/images/channels/C5.PNG)
     - This works of course if the first pipeline has no dependency between variables or values of first operations and the other operations' variables and value.
 
-    ![Local Image](/images/channels/6.PNG)
+    ![Local Image](/images/channels/C6.PNG)
     - But if you look in the second line, one instruction compute v and the second one uses the result of the computation of v but you can't use values while you are computing it.
 
-    ![Local Image](/images/channels/7.PNG)
+    ![Local Image](/images/channels/C7.PNG)
     - What you can do is differ the execution to run in parallel with another non interfering execution
 
-    ![Local Image](/images/channels/8.PNG)
+    ![Local Image](/images/channels/C8.PNG)
     - But then you have two iddle pipeline slots and it is not that great as the pipeline isn't full but still, you reduce from 6 to 4 cycles.
     - But there are no dependies between certains executions
 
-    ![Local Image](/images/channels/9.PNG)
+    ![Local Image](/images/channels/C9.PNG)
     - You could move some instructions to empty slots of previous stages and so on.
     - You can execute the code in 3 cycles. You have to execute the instructions in a out-of-order way.
     - Every modern, CPU or a lot of them, uses those techniques and execute code out-of-order. But all the instructions must be shown in order so that as a user and a programmer, you actually don't see that those instructions are executed out-of-order. What you get is that the code that otherwise would have taken 6 cycles has taken 3 cycles to be executed. You have a big performance gain.
 
-    ![Local Image](/images/channels/10.PNG)
+    ![Local Image](/images/channels/C10.PNG)
 
 * Out-Of-Order (OOO) executions
     - Instructions are executed out-of-order
@@ -395,20 +395,20 @@ ACtually, the Meltdown attack is an attack on the speculative execution engine.
 * Speculative Execution
     - Without speculation on the branch, 7 cycles needed to execute the piece of code
 
-    ![Local Image](/images/channels/11.PNG)
+    ![Local Image](/images/channels/C11.PNG)
     - With Speculation and if we take a good guess
 
-    ![Local Image](/images/channels/12.PNG)
+    ![Local Image](/images/channels/C12.PNG)
     - Our guess, the code inside the branch will be executed. You can execute that code at the same time as the code that is before the branch because there are actually no dependencies between different instructions.
     - Once you know whether v is equal to 0, you can commit the result of those speculative executions.
     - The way it works is that while it is speculating, you can be using temporary registers and when you commit the instructions because you speculated right, you essentially copy those temporary registers into the normal registers. Actually, you mark the temporary registers that have the speculated results as acting as the normal registers.
     - If you take a bad guess, you speculatively execute the instructions but then when you finally resolve the value of the condition, if it is false, in this case you speculated wrong, you went into the branch but we aren't going into the branch and what you do is just discard the results of the speculation, flush the pipeline to remove all traces of the bad speculation and go and fetch the next instruction.
 
-    ![Local Image](/images/channels/13.PNG)
+    ![Local Image](/images/channels/C13.PNG)
 
 #### Virtual Address Space
 
-![Local Image](/images/channels/14.PNG)
+![Local Image](/images/channels/C14.PNG)
 
 * Process Virtual Address Space
     - Processes run in an virtual address space and that virtual address space is made of two parts : the user space and the kernel space.
@@ -416,7 +416,7 @@ ACtually, the Meltdown attack is an attack on the speculative execution engine.
     - Now, this virtual address space of a process needs to be mapped onto physical memory and the mapping is done through the page table which impelments essentially a function to transform a virtual address of a process into a corresponding physical memory address.
     - This is obviously through the operating system that manages the page table of a process and it is the operating system that has to worry about not mapping the pages from various processes onto the same physical memory addresses.
 
-    ![Local Image](/images/channels/15.PNG)
+    ![Local Image](/images/channels/C15.PNG)
     - Something very important to remember is that we have the CPU in two mode of execution, the user mode and the privileged mode.
     - There is part of the memory which can only be accessed when we are in privileged mode and that is of course where we put the kernel so that user programs cannot modify the kernel nor access the kernel data.
     - Kernel space is actually mapped into the virtual address space of each process to basically speed up interrupts and system calls so that we don't need to switch when the user space uses a system call or when an interrupt occurs.
@@ -428,7 +428,7 @@ ACtually, the Meltdown attack is an attack on the speculative execution engine.
         * Isolation: Care must be taken to ensure that user processes cannot access or modify kernel memory. Typically, this is managed through page table permissions that allow user processes to execute system calls but prevent them from directly accessing kernel memory.
         * Kernel Page Table Isolation (KPTI): Modern processors and operating systems have introduced techniques like KPTI to mitigate security vulnerabilities (e.g., Meltdown) that can arise from having the kernel mapped into the process address space.
 
-    ![Local Image](/images/channels/16.PNG)
+    ![Local Image](/images/channels/C16.PNG)
     - On modern 64-bit computers, actually, the whole of the pysical memory is mapped into the kernel as the kernel needs to access the whole of the memory so the whole of the physical memory finds a mapping into the virtual address space of every process. This is going to be quite interesting when we start looking at the attacks.
     - That mapping is in kernel space and therefore is privileged memory and when the running process is in user mode it should not have access to that mapping and therefore process, despite the fact that the whole of physical memory is mapped into its own virtual address space, should not be able to go and read or write physical memory that it is not supposed to be accessing. 
 
@@ -436,51 +436,51 @@ ACtually, the Meltdown attack is an attack on the speculative execution engine.
 
 * First Side-Channel Attack 
 
-![Local Image](/images/channels/17.PNG)
+![Local Image](/images/channels/C17.PNG)
 
 * Meldown Attack
     - We have some code with a branch.
     - The code of the attack is inside the branch.
     - The process which is supposed to run in user mode will try to go and read kernel memory 
 
-    ![Local Image](/images/channels/18.PNG)
+    ![Local Image](/images/channels/C18.PNG)
     - Reading kernel memory when a process is in user mode is an illegal access and should trap.
 
-    ![Local Image](/images/channels/19.PNG)
+    ![Local Image](/images/channels/C19.PNG)
     - The problem of course is that inside the branch, we are going to read kernel memory while the CPU is speculating. So the idea is that while the CPU is speculating, if a trap occurs, that trap should be delayed until the moment the speculation engine has figured out that it was speculating right and the trap should only occur when the corresponding instruction would have been executed in normal program execution order. Remember that those CPUs are also doing out-of-order execution so you can't just go and trap a the very moment the speculation engine finds an illegal instruction because you are speculating so you might be doing things that the program wouldn't do anyway and you are executing out-of-order so to keep things clean and give proper signals back to the programmer or the user, you need to delay the trap until the moment the corresponding execution would have occur. This is the essence of the attack. It is to try and do things you are not supposed to do and make the most out of it before things trap.
     - The attack is really after the speculation engine and so if the CPU thinks that the branch will be taken, what it can do is start executing the code of the branch before the branch as explained earlier.
     - The code computing w_, x_, y_, z_ is executing in parallel with the other code.
     - If the branch is taken, we will have to commit the temporary results of the speculation.
 
-    ![Local Image](/images/channels/20.PNG)
+    ![Local Image](/images/channels/C20.PNG)
     - First instruction is obviously illegal because the process is in user mode but it can't fault at that moment because the CPU is speculating on the code.
 
-    ![Local Image](/images/channels/21.PNG)
+    ![Local Image](/images/channels/C21.PNG)
     - If the branch is taken, it is essentially once we know that the branch is indeed taken that the fault should occur.
     - The essence of the attack is to do something you shouldn't do while the CPU is speculating and you have time until the branch prediction is resolved to be sure it is speculated right for the fault to occur.
 
-    ![Local Image](/images/channels/22.PNG)
+    ![Local Image](/images/channels/C22.PNG)
     - If the branch is taken and we fault here at the entrance of the branch, obviously all the results will be discarded as though those instructions inside the branch never ran and the values would be discarded and therefore not be exposed to the process running in user mode.
 
-    ![Local Image](/images/channels/23.PNG)
+    ![Local Image](/images/channels/C23.PNG)
     - Until January 2018, we thought that thanks to the flushing of the badly speculated instructions, the kernel memory was not revealed and therefore the whole thing must be saved.
 
-    ![Local Image](/images/channels/24.PNG)
+    ![Local Image](/images/channels/C24.PNG)
     - Why does it work ? Because the access to kernel memory runs completely unchecked and the legality of this memory access done during the speculation is checked in parallel to the memory access because the result of the check only needs to be ready when we enter the branch. When we enter the branch, meaning when we would have entered the branch at the moment when the condition is resolved and known, so after speculations.
 
-    ![Local Image](/images/channels/25.PNG)
+    ![Local Image](/images/channels/C25.PNG)
 
 * Meltdown Attack : How Does It Work ?
     - Attack on the speculation engine which runs the code
 
-    ![Local Image](/images/channels/25.PNG)
+    ![Local Image](/images/channels/C25.PNG)
     - The speculation goes ahead and reads kernel memory without checking whether the code doing it runs in user mode or privileged mode.
 
-    ![Local Image](/images/channels/26.PNG)
+    ![Local Image](/images/channels/C26.PNG)
     - Get the value that read and mask one bit of it.
     - It extracts the least significant bit of the value that was read (the rightmost bit) and so "x" will be 0 or 1.
 
-    ![Local Image](/images/channels/27.PNG)
+    ![Local Image](/images/channels/C27.PNG)
     - Then compute "y" which is either 0 or 4096
     - Why 4096 ? Because caches never do precaching across page boundary. You are basically making sure that in the last instruction, you are gonna go and read values which are in an array but those values live on different pages.
     - A common page size is 4096 bytes (4 KB).
@@ -493,11 +493,11 @@ ACtually, the Meltdown attack is an attack on the speculative execution engine.
         * Cache Timing: After speculative execution, the attacker measures the access time to these array elements. Due to the side-channel effect, the access time reveals which cache line was loaded into the cache.
         * Page Isolation: By ensuring that each access is on a different page, the attacker avoids potential prefetching and ensures that the observed cache effects are due to the speculative execution crossing page boundaries.
 
-    ![Local Image](/images/channels/28.PNG)
+    ![Local Image](/images/channels/C28.PNG)
     - That value of y is used as an index in an user mode array.
     - In the last instructions, you read one of two specific locations (0 or 4096) in user space which is completely legal because you can always read user space data irrespective of the mode in which the CPU is. User mode can read user space data but privileged mode can also read user space data.
 
-    ![Local Image](/images/channels/29.PNG)
+    ![Local Image](/images/channels/C29.PNG)
 
 * Meltdown Attack : How Does It Work ? (Continuous)
     - When unrolling the bad speculation (which is the case here), user space code should not have gone in the branch, the CPU will discard the temporary registers and also the queued memory writes. While you are speculating, if you the code wants to write data back into memory, you don't go and update the values in memory because you are speculating so you might be doing the wrong thing so you have a write buffer where you queue memory writes and only actuate modifications of memory when the corresponding instructions are actually retired which means that the speculation was right.
@@ -544,10 +544,10 @@ ACtually, the Meltdown attack is an attack on the speculative execution engine.
     - KPTI : Kernel Page Table Isolation
     - The problem is that the kernel space which contains the whole of the physical memory inside it is available inside the virtual address space of the process so now we are going to cut this virtual address space into two page tables. We are going to have a page table for user space and a separate page table for kernel space. The idea is that you can't access addresses that are not mapped into your address space. When the process is running, it will be the part of the user space virtual address space which is accessible. While the CPU will be trying to speculate, the MMU won't be able to get the corresponding physical addresses corresponding to kernel space addresses because that mapping table will not be available to the MMU. Therefore, if the MMU is stuck, the CPU won't be able to speculate.
 
-    ![Local Image](/images/channels/30.PNG)
+    ![Local Image](/images/channels/C30.PNG)
     - More realisticly, we are going to have some interrupt/syscalls entry points still mounted in user space part of the process virtual address space and it is in these calls that the page table and the address space IDs (ASIDs) will be switched so that the MMU loads the corresponding kernel space when we have an interrupt or system call. During speculation this mechanism will let the CPU keep speculating on system calls and nothing else, the switch will also be automated. That's a fairly simple defense, you just split in a sense the virtual address space of the process and only expose either the user space or the kernel space so that speculation cannot, when in user mode, access kernel space unless it is through system calls. System calls don't let you go and read anything you like in the kernel.
 
-    ![Local Image](/images/channels/31.PNG)
+    ![Local Image](/images/channels/C31.PNG)
 
 * Meltdown Countermeasure : Impact
     - Entry/exit info/from interrupt/syscalls become very expensive because changing the page table means that almost pay a complete context switch. You do that on system calls and interrupt and that is the reason why the kernel space used to be mapped to the whole of the virtual address space of the process.
@@ -563,34 +563,34 @@ ACtually, the Meltdown attack is an attack on the speculative execution engine.
 
 #### Specter 1
 
-![Local Image](/images/channels/32.PNG)
+![Local Image](/images/channels/C32.PNG)
 
 * Spectre 1 : Bounds Check Bypass
     - Let say we have access to two arrays in main memory and arrays are in user space.
     - A check on the bound of the array.
 
-    ![Local Image](/images/channels/33.PNG)
+    ![Local Image](/images/channels/C33.PNG)
     - The attack access an index in one of the arrays
     - The idea is to actually bypass the check for instance, x could be further than the end of the array and then you extract one bit from the value you just read, you do the trick of computing an index which is either 0 or 4096 and then you go and read in a second array at that index a value and by timing another access to this value in the second array, you will be doing the same trick as trying to guess what bit you have stolen as Meltdown.
 
-    ![Local Image](/images/channels/34.PNG)
+    ![Local Image](/images/channels/C34.PNG)
     - That is the main strategy as in Meltdown attack.
 
-    ![Local Image](/images/channels/35.PNG)
+    ![Local Image](/images/channels/C35.PNG)
     - Javascrypt engine does this, JIT (Just-In-Time Compiler), try and make sure that indices are in bound.
     - For the attack to work, the attacker must make sure that the `array1_size` value is not in cache. We saw with the Meltdown attack that you have unprivileged instructions to flush cache lines out of the cache or you can do it by repeatedly loading values that you know share the same cache line as `array1_size` but to do the latest you need to know the structure of the cache, much easier to do if you have a flush instruction. 
 
-    ![Local Image](/images/channels/36.PNG)
+    ![Local Image](/images/channels/C36.PNG)
     - The attacker might need to train the branch predictor to take a branch. It might need to perform a few in-bounds accesses to `array1` beforehand so that the branch predictor start thinking ok this branch is almost always taken so i'll speculate by taking.
 
-    ![Local Image](/images/channels/37.PNG)
+    ![Local Image](/images/channels/C37.PNG)
     - The attack is any x the idea being since `array1_size` is not in the cache, it is going to take some time for the speculation engine to retrieve the value from memory and therefore it would speculate blindly on any x and it is only when `array1_size` would be resolved that it will see that it should not have speculated by executing this code.
     - The idea is that any x means you can go and read any values outside `array1` because bound check is not done at the moment you go and speculate.
 
-    ![Local Image](/images/channels/38.PNG)
+    ![Local Image](/images/channels/C38.PNG)
     - If again, `array2[0]` and `array2[4096]` are evicted from the cache, before the attack, we know exactly what is going on because we found something similar in the Meltdown attack. By just timing access to one of those two values after the attack we can then guess whether the value that was read basically corresponds to bit 0 or 1 of the bit that we are stealing from the value.
 
-    ![Local Image](/images/channels/39.PNG)
+    ![Local Image](/images/channels/C39.PNG)
     - When `array1_size` finally gets resolved, the CPU unrolls the mis-speculated instructions and the cache is not flushed for mainly performance reasons and so the attacker just needs to time `array2[0]` in the normal following code that follows the speculation
 
 * Spectre 1 is not Meltdown
@@ -633,7 +633,7 @@ ACtually, the Meltdown attack is an attack on the speculative execution engine.
     - That history is actually, so the jump target history is actually called the branch target buffer. It stores the last few destinations (target) addresses for each jump instructions (source address).
     - Values that we find in that BTB is used to speculate on jump targets so that speculation engine can run ahead and it might for instance do some kind of majority vote on where to go.
 
-    ![Local Image](/images/channels/40.PNG)
+    ![Local Image](/images/channels/C40.PNG)
 
 * BTB bits are expensive
     - The only problem is that those BTB are quite expensive because it is a table. It is bits, the information you put in there, it is taking space on the CPU. It is consuming CPU real estate. What the CPU manufacturers do is that they try and keep the functionality or pretty much the target prediction as good as if supported by a full size branch target buffer, but by reducing the number of bits that they store in that table. For instance what they do when we say the source address of the jump, they actually represent the source address by some upper bits of the source address. They are kind of discarding some of the lower bits of the address and what it does is that now you have a many to one mapping. You can have several distinct source addresses that all share the same upperbits that are kept and therefore, they will be maped onto the same entry of the branch target buffer. Therefore, their target will be shared in the data.
@@ -660,17 +660,17 @@ ACtually, the Meltdown attack is an attack on the speculative execution engine.
 
 * Spectre 2 : Impact on System Call Interface Mechanism ? 
 
-![Local Image](/images/channels/41.PNG)
+![Local Image](/images/channels/C41.PNG)
 
 This is the system call interface mechanism that the OS uses to let user applications call in services from the kernel. Guess what ? We are going through a table and this table implements indirect branching. So, whenever you call a system call, you have an indirect branch. 
 
 The whole system is supposed to be able to constrain where the users space code can get the kernel space to jump and only at specific entry points for the system calls but now, as we have just seen, through pollution of the branch target buffer, an attacker could actually change those entry points and get the kernel to jump anywhere inside the kernel. That is a pretty bad situation.
 
-![Local Image](/images/channels/42.PNG)
+![Local Image](/images/channels/C42.PNG)
 
 * Spectre 2 : Impact on Code ?
 
-![Local Image](/images/channels/43.PNG)
+![Local Image](/images/channels/C43.PNG)
 
 Take this C++ code as example. In the C++ inheritance mechanism, you have dynamic binding. You can have two classes, one `Base` class, which has a `Foo()` method and another `Derived` class from the `Base` class that also has a version of the `Foo()` method. If somewhere you say ok I have a pointer to a `Base` object and you put a pointer to a `Derived` object into that. If you call `Foo()` on the object, because using it through a pointer, then you will have dynamic binding. The runtime will do dynamic binding and would actually compute that it is the `Foo()` method that it needs to use because the `Foo()` method in the `Base` was declared as virtual.
 
@@ -691,7 +691,7 @@ The attack is not only on the system call interface but also all over C++. That 
 * Spectre 2 : Retpoline for Jump *%r11
 The way it works is this : if you have a jump to an indirect target, that is the jump %r11 implementations, before the attack, what the compiler would have done was to simply issue this instruction as such and what this instruction does is that in the register 11, you actually have the address where the target address is in memory. So that you indirect through the value inside r11 to go and fetch, so, inside the register, you have the address in main memory where the address of the target is.
 Instead of just issuing this assembly instruction or corresponding machine instruction which the compiler use to do, what it will do is replace that instruction with the little code as shown.
-![Local Image](/images/channels/44.PNG)
+![Local Image](/images/channels/C44.PNG)
 
 It will do a direct call to `set_up`. The target for `set_up` is actually in the instruction, so no speculation here. And when you do a call to a function and here this is a function call in a sense, the return address from the call which in this example should be the address of the `capture`, should be put on the stack. What the compiler does here in the `set_up`, what the `set_up` does, it says the return address, I don't want the one that is done by the call instruction, I want you to move into the stack at the place where there is a return address, I want you to move the value that you find by indirecting through the register 11. This move instruction here will place the target address in the stack at the place where the return address from the `set_up` function is.
 So, `set_up`, when it returns, should return eventually to the branch target address.
@@ -703,11 +703,11 @@ This moving completes a lot of CPU cycles because values we are after needs to c
 
 Then the function `set_up` finishes and we are going to return, but we have no idea where.
 
-![Local Image](/images/channels/45.PNG)
+![Local Image](/images/channels/C45.PNG)
 
 Even if we knew where we are going, the cache line representing the return address that has been saved in the stack could go missing from the cache because it could be evicted.
 
-![Local Image](/images/channels/46.PNG)
+![Local Image](/images/channels/C46.PNG)
 
 You have a buffer on the speculation engine of the CPU that basically stores the return addresses that come from call instruction.
 
@@ -717,23 +717,23 @@ So here, we are going to have a copy of the address of the `capture` label on th
 
 But at the same time, when we finish the `set_up` function, the speculation engine will use the RSB to know where to return.
 
-![Local Image](/images/channels/47.PNG)
+![Local Image](/images/channels/C47.PNG)
 
 The speculation engine will just do this until it knows it speculated right or wrong. It will know that when we finally get the branch target address out of memory. The speculation will that oh wait a minute, the value we had to jump to was actually not the address it thought. It will undo speculation and jump at the right place which is the place given by the value that was retrieved from the address contained in the register 11 in this case which is branch target for the indirect jump.
 
-![Local Image](/images/channels/48.PNG)
+![Local Image](/images/channels/C48.PNG)
 
 As long as the CPU doesn't know where you wanted to jump exactly, it will speculate and here we force it by using a direct call as opposed to an indirect jump, we force it to speculate by doing nothing. That is why it is called a returned trampoline because as long as the speculation engine doesn't know where it needs to return because where it needs to return comes from RAM, it will just jumps endlessly like it is jumping on a trampoline.
 
-![Local Image](/images/channels/49.PNG)
+![Local Image](/images/channels/C49.PNG)
 
-![Local Image](/images/channels/50.PNG)
+![Local Image](/images/channels/C50.PNG)
 
-![Local Image](/images/channels/51.PNG)
+![Local Image](/images/channels/C51.PNG)
 
-![Local Image](/images/channels/52.PNG)
+![Local Image](/images/channels/C52.PNG)
 
-![Local Image](/images/channels/53.PNG)
+![Local Image](/images/channels/C53.PNG)
 
 Google also disabled the use of hyperthreading in the cores (another solution) because those BTB were shared between hyperthreads.
 
@@ -860,7 +860,7 @@ This controlled loop prevents the CPU from executing unintended instructions spe
 
 * Example of a Blackbow Random Fuzzer
 
-![Local Image](/images/fuzzing/1.PNG)
+![Local Image](/images/fuzzing/F1.PNG)
 
 You give it a `seed` input which is a well formed input for the program and then this will randomly choose how many mutations it needs to do on the well formed input that it was given and here it takes a fixed rate of mutations $\sim$ 1000 bytes and then it will compute a new input based on the well-formed input it was given and takes between 1 and up to 1/1000th of the byte and replace those bytes at random with a random value. New mutated input computed and executes the application with the new computed input and see what happens.
 
@@ -882,23 +882,23 @@ Very general approach and some grammar-based fuzzers also include programmatic c
 
 This is like a language to code the grammar and the `s_string` command simply defines a constant string. When the fuzzer sees a line like this, it will simply output that `POST / api/blog/ HTTP/1.2 ` string.
 
-![Local Image](/images/fuzzing/2.PNG)
+![Local Image](/images/fuzzing/F2.PNG)
 
 It tells the fuzzer to output the size of `blockA` as a 2 character string. 
 
-![Local Image](/images/fuzzing/3.PNG)
+![Local Image](/images/fuzzing/F3.PNG)
 
 Then, we have the code that declares or defines `blockA`. We have the start of the block instruction and the end of the block instruction.
 
-![Local Image](/images/fuzzing/4.PNG)
+![Local Image](/images/fuzzing/F4.PNG)
 
 And then we have inside the block two constant strings that will just be outputed. And the `s_string` variable is code that instructs the fuzzer to output a first string. Some of the grammar-based fuzzers have dictionaries of fuzzed strings that they would go and get, replace and output each of the inputs in their dictionary at various parts of the code. Can have one dictionary for each `s_string` variable declared.
 It is in the way that you populate the various dictionaries that you control exactly how the inputs are fuzzed.
 Using a dictionary reduces this noise by focusing on inputs that are more likely to be significant.
 
-![Local Image](/images/fuzzing/5.PNG)
+![Local Image](/images/fuzzing/F5.PNG)
 
-![Local Image](/images/fuzzing/6.PNG)
+![Local Image](/images/fuzzing/F6.PNG)
 
 Grammar-based Fuzzing is very powerful but it requires user expertise to focus input towards corner cases, inputs that are more likely than others to create problems.
 
@@ -920,26 +920,26 @@ You do this in combination with a runtime checker. Actually use a runtime checke
 
 Quick look at whitebox testing example of a function that simply takes an integer as an input and then computes another integer from it and if that computed integer takes a specific value, there is an error in the code represented as an abort here. Else everything is fine represented as returning zero.
 
-![Local Image](/images/fuzzing/7.PNG)
+![Local Image](/images/fuzzing/F7.PNG)
 
 What a whitebox testing might do is to try and test this with an input value of zero.
 
-![Local Image](/images/fuzzing/8.PNG)
+![Local Image](/images/fuzzing/F8.PNG)
 
 It will then find that it has gone through the else branch of the if as the if branch has not been taken (semantically equivalent to being an else clause). 
 The symbolic execution will find that there is a constraint on the path of the ELSE branch and that the constraint will be that $x + 3 \neq 13$
 
-![Local Image](/images/fuzzing/9.PNG)
+![Local Image](/images/fuzzing/F9.PNG)
 
 The path constraint will be negated and so the constraint being negated is that $x + 3 = 13$. That negated constraint is passed to a constraint resolver that will comeback and sy x must be equal to 10. Then, the whitebow fuzzer will then use $x = 10$ as the next input and obviously by doing this, we have a new path in the execution path that gets explored and in this case we uncover the error.
 
-![Local Image](/images/fuzzing/10.PNG)
+![Local Image](/images/fuzzing/F10.PNG)
 
-![Local Image](/images/fuzzing/11.PNG)
+![Local Image](/images/fuzzing/F11.PNG)
 
 Whitebox testing generates inputs that will be fed to the program in a much more dirven way and the strategy is to explore as many execution paths as possible in a very short time. A little note, if you are trying to test this piece of code on a 64-bit machine using blackbox testing, you would have only one out of $2^{64}$ chances to find this bug because just mutating the input here, it is only one out of $2^{64}$ inputs that will uncover the bug. Whitebox testing is much more efficient and effective here at uncovering bugs than blackbox testing.
 
-![Local Image](/images/fuzzing/12.PNG)
+![Local Image](/images/fuzzing/F12.PNG)
 
 Whitebox testing can theoretically provide program verification (total coverage) tests that cover the totality of the code, all the execution paths. But in practice, the number of execution paths explode exponentially especially if code is complex. A branch multiplies the number ...
 There are also things in modern programming languages that render symbolic execution and contraints generation and solving very imprecise such as pointer operations, floating-point, system calls, libraries in a sense that there is no precise solution in the symbolic execution, constraint generation and solver in reasonable practical time.
