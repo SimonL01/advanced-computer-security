@@ -395,18 +395,18 @@ ACtually, the Meltdown attack is an attack on the speculative execution engine.
 * Speculative Execution
     - Without speculation on the branch, 7 cycles needed to execute the piece of code
 
-    ![Local Image](/images/channels/C11.PNG)
+![Local Image](/images/channels/C11.PNG)
 
     - With Speculation and if we take a good guess
 
-    ![Local Image](/images/channels/C12.PNG)
-    
+![Local Image](/images/channels/C12.PNG)
+
     - Our guess, the code inside the branch will be executed. You can execute that code at the same time as the code that is before the branch because there are actually no dependencies between different instructions.
     - Once you know whether v is equal to 0, you can commit the result of those speculative executions.
     - The way it works is that while it is speculating, you can be using temporary registers and when you commit the instructions because you speculated right, you essentially copy those temporary registers into the normal registers. Actually, you mark the temporary registers that have the speculated results as acting as the normal registers.
     - If you take a bad guess, you speculatively execute the instructions but then when you finally resolve the value of the condition, if it is false, in this case you speculated wrong, you went into the branch but we aren't going into the branch and what you do is just discard the results of the speculation, flush the pipeline to remove all traces of the bad speculation and go and fetch the next instruction.
 
-    ![Local Image](/images/channels/C13.PNG)
+![Local Image](/images/channels/C13.PNG)
 
 #### Virtual Address Space
 
