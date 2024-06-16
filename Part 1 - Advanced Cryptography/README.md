@@ -108,7 +108,7 @@ Solution : Make the signature depend on document
 
 **Basic Signature Principle**
 
-![Local Image](/Theory/images/chapter1/2.PNG)
+![Local Image](/images/chapter1/2.PNG)
 
 * Signing Process (S)
     1. Inputs
@@ -142,7 +142,7 @@ Solution : Make the signature depend on document
 
 RSA is sensitive to a selected ciphered text attack : by carefully choosing two or more ciphertexts and using the multiplicative property, an attacker could forge a signature. For instance, if an attacker wants to forge a signature for a message $m$ without knowing the private key, they could try to find two messages $m_{1}$ and $m_{2}$ for which they already have signatures such that $m_{1} = m_{2} = m \; mod \; n$. Then, by multiplying the signatures, they would end up with a valid signature for $m$.
 
-![Local Image](/Theory/images/chapter1/3.PNG)
+![Local Image](/images/chapter1/3.PNG)
 
 In this example, the attacker (represented by the pirate) attempts to forge a sgnature using only the public key. This is an existential forgery attack under key-only conditions.
 
@@ -238,7 +238,7 @@ Example of a Chosen Ciphertext Attack on RSA :
 
 **Extended Signature Principle**
 
-![Local Image](/Theory/images/chapter1/4.PNG)
+![Local Image](/images/chapter1/4.PNG)
 
 * One may incorporate a hash functions in the scheme to prevent forgery.
 * How does the hash function help ?
@@ -302,9 +302,9 @@ Example of a Chosen Ciphertext Attack on RSA :
 * <ins>**ElGamal Signature**</ins> is based on the discrete log problem
 * Variant has been adopted by NIST as the DSA
 
-![Local Image](/Theory/images/chapter1/5.PNG)
+![Local Image](/images/chapter1/5.PNG)
 
-![Local Image](/Theory/images/chapter1/6.PNG)
+![Local Image](/images/chapter1/6.PNG)
 
 * Generally, $p$ is a prime of length 1,024 bits and the signature $\sigma = (\gamma, \delta)$ is of 2,048 bits. If length matters, Schnorr's signature scheme is a modification of ElGamal such that the signature has length around 320 bits.
 
@@ -316,7 +316,7 @@ Example of a Chosen Ciphertext Attack on RSA :
 
 * The public key is bound to the private key because its component $\alpha$ and $\beta$ are in a relationship such that $\beta = \alpha^{s_{k}}$. So only someone that knows $s_{k}$ can create a valid signature. Deriving $s_{k}$ from $p_{k}$ is as difficult as solving the discrete logarithm problem.
 
-![Local Image](/Theory/images/chapter1/7.PNG)
+![Local Image](/images/chapter1/7.PNG)
 
 **Signature Forgery**
 
@@ -337,11 +337,11 @@ Example of a Chosen Ciphertext Attack on RSA :
     - The <ins>**One-Parameter Forgery**</ins>
         * D. Pointcheval, J. Stern.  Security Proofs for Signature Schemes.  In Proc. EUROCRYPT.  May 1996
 
-    ![Local Image](/Theory/images/chapter1/8.PNG)
+    ![Local Image](/images/chapter1/8.PNG)
 
     - The <ins>**Two-Parameter Forgery**</ins>
 
-    ![Local Image](/Theory/images/chapter1/9.PNG)
+    ![Local Image](/images/chapter1/9.PNG)
 3. Of course, hashing the message prevents forgeries, same as extended RSA signature.
 
 **Improper Use**
@@ -352,9 +352,9 @@ Example of a Chosen Ciphertext Attack on RSA :
     - The secret key $s_{k}$ is retrieved
         * Jack can create many forgeries
 
-![Local Image](/Theory/images/chapter1/10.PNG)
+![Local Image](/images/chapter1/10.PNG)
 
-![Local Image](/Theory/images/chapter1/11.PNG)
+![Local Image](/images/chapter1/11.PNG)
 
 #### DSA Signature
 
@@ -362,9 +362,9 @@ Example of a Chosen Ciphertext Attack on RSA :
 
 * Based on discrete log problem, similar to ElGamal and Schnorr, it was adopted by NIST in the 90's
 
-![Local Image](/Theory/images/chapter1/12.PNG)
+![Local Image](/images/chapter1/12.PNG)
 
-![Local Image](/Theory/images/chapter1/13.PNG)
+![Local Image](/images/chapter1/13.PNG)
 
 **Signature Forgery**
 
@@ -396,7 +396,7 @@ Example of a Chosen Ciphertext Attack on RSA :
     - Software vendor signs code with its private key
     - Clients have vendor's $p_{k}$ and install software if signature verifies (because the software might be distributed on an untrusted website for example)
 
-    ![Local Image](/Theory/images/chapter1/14.PNG)
+    ![Local Image](/images/chapter1/14.PNG)
 
 * More generally :
     - One-Time Authenticated Channel
@@ -416,7 +416,7 @@ Example of a Chosen Ciphertext Attack on RSA :
         * receives vendor's public key
         * verifies and installs updates with $V(up_{i}, \sigma_{i}, p_{k})$, if successfful, installs software
         
-        ![Local Image](/Theory/images/chapter1/15.PNG)
+        ![Local Image](/images/chapter1/15.PNG)
 
 **EMV**
 
@@ -424,7 +424,7 @@ Example of a Chosen Ciphertext Attack on RSA :
     - International security standard for smart payment cards
     - Greatly simplified :
 
-    ![Local Image](/Theory/images/chapter1/16.PNG)
+    ![Local Image](/images/chapter1/16.PNG)
 
     - Transaction Details Sent to Card
         * The POS terminal sends the transaction details to the EMV card. This includes 
@@ -449,7 +449,7 @@ Example of a Chosen Ciphertext Attack on RSA :
 
 * When a browser connects to Gmail, Gmail sends the signed certificate to the browser. The browser uses the CA's public key $(p_{k_{CA}})$ to verify the CA's signature on the certificate. If the verification is successful, the browser can trust that the public key in the certificate belongs to Gmail. The browser <ins>**trusts**</ins> the CA to verify the identify of the server, which in turn allows the browser to <ins>**trust**</ins> the server's public key.
 
-![Local Image](/Theory/images/chapter1/17.PNG)
+![Local Image](/images/chapter1/17.PNG)
 
 **DKIM**
 
@@ -466,7 +466,7 @@ Example of a Chosen Ciphertext Attack on RSA :
 
 * General Overview :
 
-![Local Image](/Theory/images/chapter1/18.PNG)
+![Local Image](/images/chapter1/18.PNG)
 
 1. Email Composition
     - A Gmail user composes an email with the body of the message.
@@ -504,7 +504,7 @@ Example of a Chosen Ciphertext Attack on RSA :
 
 * Card-based payment is a business, with multiple stakeholders and legal rules.
 
-![Local Image](/Theory/images/chapter2/1.PNG)
+![Local Image](/images/chapter2/1.PNG)
 
 * Key Stackholders 
     - Customer/Payer : The individual or entity that initiates a payment using a card (credit, debit, etc.).
@@ -534,7 +534,7 @@ Example of a Chosen Ciphertext Attack on RSA :
 
 * Overall structure of a payment card
 
-    ![Local Image](/Theory/images/chapter2/2.PNG)
+    ![Local Image](/images/chapter2/2.PNG)
 
 **Payment Account Number (PAN)**
 
@@ -546,13 +546,13 @@ Example of a Chosen Ciphertext Attack on RSA :
     - commonly 16 digits
 * Construction (16 digits)
 
-    ![Local Image](/Theory/images/chapter2/3.PNG)
+    ![Local Image](/images/chapter2/3.PNG)
 
 * <ins>**Major Industry Identifier**</ins>
     - telss what the card is for
     - very first digit (a digit ranges from 0 to 9)
 
-    ![Local Image](/Theory/images/chapter2/4.PNG)
+    ![Local Image](/images/chapter2/4.PNG)
 
 * <ins>**Issuer Identification Number (IIN)**</ins>
     - for identifying which bank owns the card
@@ -562,7 +562,7 @@ Example of a Chosen Ciphertext Attack on RSA :
     - between 10 and 19 digits
     - INN main numbers (list available [here](https://en.wikipedia.org/wiki/Payment_card_number))
 
-    ![Local Image](/Theory/images/chapter2/5.PNG)
+    ![Local Image](/images/chapter2/5.PNG)
 
 * PAN checksum is computed using the <ins>**Luhn algorithm**</ins>
     - starting from the right, double the value of every second digit (e.g., 7 $\rightarrow$ 14)
@@ -570,7 +570,7 @@ Example of a Chosen Ciphertext Attack on RSA :
     - validate a check digit $(sum + X) \% 10 = 0$
     - example
 
-    ![Local Image](/Theory/images/chapter2/6.PNG)
+    ![Local Image](/images/chapter2/6.PNG)
 
 * PAN is the payment card number security
 * Credit cra numbers are important
@@ -608,7 +608,7 @@ Example of a Chosen Ciphertext Attack on RSA :
         * Encryption : The combination of the PAN, expiration date, service code and CVK are fed into an encryption algorithm.
         * Output : The output of this encryption process is the CVV, which is a 3- or 4-digit number
 
-        ![Local Image](/Theory/images/chapter2/7.PNG)
+        ![Local Image](/images/chapter2/7.PNG)
 
 * Steps for CVV Prompting in Online Transactions
     - Customer selects payment method
@@ -635,7 +635,7 @@ Example of a Chosen Ciphertext Attack on RSA :
     - See [here]( https://www.q-card.com/about-us/iso-magnetic-stripe-card-standards/page.aspx?id=1457) for a good summary
     - Magstripe positioning is not random
 
-    ![Local Image](/Theory/images/chapter2/8.PNG)
+    ![Local Image](/images/chapter2/8.PNG)
 
 * A Magnetic Stripe contains 3 tracks (each 2.79mm wide)
     - Track 1 (IATA) : read-only and 79 x 6 bits, 210 bits/inch
@@ -651,20 +651,20 @@ Example of a Chosen Ciphertext Attack on RSA :
         * PVV
             - See [here](https://www.ibm.com/support/knowledgecenter/en/SSLTBW_2.1.0/com.ibm.zos.v2r1.csfb400/csfb4za2598.htm)
 
-    ![Local Image](/Theory/images/chapter2/10.PNG)
+    ![Local Image](/images/chapter2/10.PNG)
 
-    ![Local Image](/Theory/images/chapter2/11.PNG)
+    ![Local Image](/images/chapter2/11.PNG)
 
 
     - Track 2 (ABA) : backup with low resolution of all data, except the name and 40 x 4+1 bits, 75 bits/inch
 
-    ![Local Image](/Theory/images/chapter2/12.PNG)
+    ![Local Image](/images/chapter2/12.PNG)
 
-    ![Local Image](/Theory/images/chapter2/13.PNG)
+    ![Local Image](/images/chapter2/13.PNG)
 
     - Track 3 (THRIFT) : usually unused, read-write, 107 x 4 bits
 
-    ![Local Image](/Theory/images/chapter2/9.PNG)
+    ![Local Image](/images/chapter2/9.PNG)
     
 **Chip Architecture**
 
@@ -672,7 +672,7 @@ Example of a Chosen Ciphertext Attack on RSA :
     - be careful, chops may have many different contact pad layouts
     - J. Magiera, A. Pawlak.  Security Frameworks for Virtual Organizations.  In Virtual Organisations: Systems and Practices. December 2005.
 
-    ![Local Image](/Theory/images/chapter2/14.PNG)
+    ![Local Image](/images/chapter2/14.PNG)
 
 * <ins>**Voltage Common Collector (Vcc)**</ins>
     - power supply
@@ -744,7 +744,7 @@ Example of a Chosen Ciphertext Attack on RSA :
 
 **Protocol**
 
-![Local Image](/Theory/images/chapter2/15.PNG)
+![Local Image](/images/chapter2/15.PNG)
 
 1. $T$ reads Card $C$
     - The customer inserts or taps their card at the terminal, $T$. The terminal reads the card data, which includes the card number
@@ -782,7 +782,7 @@ Example of a Chosen Ciphertext Attack on RSA :
 * EMV payment is a four steps process
     - simplified version
 
-    ![Local Image](/Theory/images/chapter2/16.PNG)
+    ![Local Image](/images/chapter2/16.PNG)
 
 1. The terminal requests, from the card, all information required to process the transaction.
 2. The terminal confirms the card is legitimate.
@@ -791,11 +791,11 @@ Example of a Chosen Ciphertext Attack on RSA :
 
 * Actors 
 
-    ![Local Image](/Theory/images/chapter2/17.PNG)
+    ![Local Image](/images/chapter2/17.PNG)
 
 * Issuer/Acquirer authentication process
 
-    ![Local Image](/Theory/images/chapter2/18.PNG)
+    ![Local Image](/images/chapter2/18.PNG)
 
     - CA (Certificate Authority) has its own public/private keys pair. It is responsible for issuing digital certificates and managing keys.
     - Issuing bank is responsible for managing card personalization.
@@ -856,7 +856,7 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
 
 * Certificate/Key exchanged between card and terminal (part of the verification in an EMV transaction)
 
-![Local Image](/Theory/images/chapter2/19.PNG)
+![Local Image](/images/chapter2/19.PNG)
 
 1. Send Certificate
     - During a transaction, the EMV card sends its digital certificate to the terminal. This certificate includes the issuer's public key validated by the CA.
@@ -884,7 +884,7 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
     - directories (DFs = <ins>**Dedicated Files**</ins>)
     - actual data (EFs = <ins>**Elementary Files**</ins>)
 
-    ![Local Image](/Theory/images/chapter2/20.PNG)
+    ![Local Image](/images/chapter2/20.PNG)
 
     - Each EF contains an <ins>**Application Identifier**</ins> for matching files with application.
 
@@ -905,11 +905,11 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
     - Static data is hashed an ciphered with the issuer private key : <ins>**Signed Static Application DATA (SSAD)**</ins>
     - Static data and SSAD stored on the chip
 
-    ![Local Image](/Theory/images/chapter2/21.PNG)
+    ![Local Image](/images/chapter2/21.PNG)
     
     - Card Authentication (green key is the issuer's public key extracted from certificate, blue key is the CA public key)
     
-    ![Local Image](/Theory/images/chapter2/22.PNG)
+    ![Local Image](/images/chapter2/22.PNG)
 
     - Limits 
         * Card can be cloned and any data involved in SDA can be read.
@@ -918,11 +918,11 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
     - Requires the presence of the cipher co-processor in the chip.
     - The main difference lies at the personalization time. Two session keys are derived from the issuer keys and stored in the private area of the chip.
 
-    ![Local Image](/Theory/images/chapter2/23.PNG)
+    ![Local Image](/images/chapter2/23.PNG)
 
-    ![Local Image](/Theory/images/chapter2/24.PNG)
+    ![Local Image](/images/chapter2/24.PNG)
 
-    ![Local Image](/Theory/images/chapter2/25.PNG)
+    ![Local Image](/images/chapter2/25.PNG)
 
 3. CDA
     - combines DDA and application cryptogram generation
@@ -930,9 +930,9 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
         * a communication in cipher 
     - cryptograms are sent to issuer to confirm the legitimacy of the transaction
 
-    ![Local Image](/Theory/images/chapter2/26.PNG)
+    ![Local Image](/images/chapter2/26.PNG)
 
-    ![Local Image](/Theory/images/chapter2/27.PNG)
+    ![Local Image](/images/chapter2/27.PNG)
 
 **Cardholder Verification**
 
@@ -971,7 +971,7 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
     - online transaction
         * requires a contact with both acquiring and issuing bank
     
-    ![Local Image](/Theory/images/chapter2/28.PNG)
+    ![Local Image](/images/chapter2/28.PNG)
 
 #### Contactless Payment
 
@@ -1007,7 +1007,7 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
     - <ins>**Transponder**</ins>
     - <ins>**Antenna**</ins>
 
-    ![Local Image](/Theory/images/chapter2/29.PNG)
+    ![Local Image](/images/chapter2/29.PNG)
 
 * There are 2 types of tags
     - <ins>**Passive**</ins> tags
@@ -1037,7 +1037,7 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
     - primary importance when determining data transfer rates
     - the higher the frequency, the higher the data transfer rate
 
-    ![Local Image](/Theory/images/chapter2/30.PNG)
+    ![Local Image](/images/chapter2/30.PNG)
 
 **Near-Field Communications (NFC)**
 
@@ -1058,7 +1058,7 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
 * NFC communicates via magnetiic field induction
     - where 2 loop antennas are located within each other's near fields, forming an air-core transformer
 
-    ![Local Image](/Theory/images/chapter2/31.PNG)
+    ![Local Image](/images/chapter2/31.PNG)
 * Communication schemes
     - passive communication
         * initiating device produces carrier field
@@ -1113,7 +1113,7 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
     - Alice keeps a single value
     - Alice can validate the items returned to her
 
-    ![Local Image](/Theory/images/chapter3/1.PNG)
+    ![Local Image](/images/chapter3/1.PNG)
 
 * How can we efficiently achieve that ?
 * First Solution
@@ -1121,7 +1121,7 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
     - $s = H(x_{1}, x{2}, x_{3}, ...)$
     - validation of an item
 
-    ![Local Image](/Theory/images/chapter3/2.PNG)
+    ![Local Image](/images/chapter3/2.PNG)
 
     - Drawbacks
         * Bob must send the entire set of items for validation
@@ -1134,7 +1134,7 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
     - Alice uses the item $X_{2}$ and the provided proof to compute a hash. This computation typically involes combining $X_{2}$ with the hashes in the proof to reconstruct the root hash.
     - Alice compares the computed hash with the root hash she has saved. If the computed hash matches the saved root hash, Alice can be confident that $X_{2}$ is a valid itemm from the set stored by Bob. If not, the item or the proof is invalid.
     
-    ![Local Image](/Theory/images/chapter3/3.PNG)
+    ![Local Image](/images/chapter3/3.PNG)
 
 #### Principle
 
@@ -1162,13 +1162,13 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
 
 * Merkle tree construction
 
-![Local Image](/Theory/images/chapter3/4.PNG)
+![Local Image](/images/chapter3/4.PNG)
 
 **Verification**
 
 * Verification of an item $d$
 
-![Local Image](/Theory/images/chapter3/5.PNG)
+![Local Image](/images/chapter3/5.PNG)
 
 #### Use Cases
 
@@ -1182,11 +1182,11 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
         * blobs (files)
     - see [here](https://git-scm.com/book/en/v2/Git-Internals-Git-Objects)
 
-    ![Local Image](/Theory/images/chapter3/6.PNG)
+    ![Local Image](/images/chapter3/6.PNG)
 
 * Git objects have all the same format
 
-![Local Image](/Theory/images/chapter3/7.PNG)
+![Local Image](/images/chapter3/7.PNG)
 
 * Objects are 
     - stored compressed `gzcompress(Object)`
@@ -1200,28 +1200,28 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
     - type = "tree"
     - data contains a list of tree entries
 
-    ![Local Image](/Theory/images/chapter3/8.PNG)
+    ![Local Image](/images/chapter3/8.PNG)
 
 * Example
 
-![Local Image](/Theory/images/chapter3/9.PNG)
+![Local Image](/images/chapter3/9.PNG)
 
 * Commit object
     - type = "commit"
     - data is follow
 
-    ![Local Image](/Theory/images/chapter3/10.PNG)
+    ![Local Image](/images/chapter3/10.PNG)
 
 * Example
 
-![Local Image](/Theory/images/chapter3/11.PNG)
+![Local Image](/images/chapter3/11.PNG)
 
 * Git data integrity
     - commit hash depends on all child tree/blob hashes and parent commits
         * commit hash is a signature for the entire data
         * Merkle Tree !
 
-        ![Local Image](/Theory/images/chapter3/12.PNG)        
+        ![Local Image](/images/chapter3/12.PNG)        
 
 **BitTorrent**
 
@@ -1247,7 +1247,7 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
     - file shared by 4 peers
     - file downloaded by a peer
 
-    ![Local Image](/Theory/images/chapter3/13.PNG)
+    ![Local Image](/images/chapter3/13.PNG)
 * Downloads start with `.torrent` file
     - encoded using bencoding
         * encoding scheme used by P2P file sharing protocol for storing and transmitting loosely structured plan
@@ -1339,7 +1339,7 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
     - all nodes agree to a protocol that determines the "true state" of the ledger at any pointn in time
         * applictaion of this protocol is called <ins>**achieving consensus**</ins>
     
-    ![Local Image](/Theory/images/chapter4/1.PNG)
+    ![Local Image](/images/chapter4/1.PNG)
 * What is a distributed ledger ?
     - A distributed ledger is a type of database that is shared, replicated, and synchronized across multiple nodes (computers or entities). Unlike a centralized database, a distributed ledger does not rely on a single central point of control. This decentralization enhances security, transparency, and resilience.
     - Single Entity
@@ -1359,7 +1359,7 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
         * Consortium blockchains involve a group of organizations that collaboratively maintain the ledger and manage the blockchain
         * Example : A consortium of banks using a blockchain netwrok for interbank settlements, where each bank operates its own node
 
-    ![Local Image](/Theory/images/chapter4/2.PNG)
+    ![Local Image](/images/chapter4/2.PNG)
 
 **Big Picture**
 
@@ -1369,7 +1369,7 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
     - ...
 * Big picture of a Blockchain
 
-![Local Image](/Theory/images/chapter4/3.PNG)
+![Local Image](/images/chapter4/3.PNG)
 
 * Generally speaking, how does it work ?
     - users initiate transactions using their digital signatures
@@ -1423,7 +1423,7 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
     - The graph shows fluctuations and periodic spikes, which could correspond to periods of high transactions volume or specific events in the Bitcoin ecosystem.
     - Implications : Scalability, Network Congestion and Technological Development to solve scalability problems, larger transaction loads problems etc. 
 
-![Local Image](/Theory/images/chapter4/4.PNG)
+![Local Image](/images/chapter4/4.PNG)
 
 **Header**
 
@@ -1441,7 +1441,7 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
         * proves when and what happened on the Blockchain
         * Example with Bitcoin
 
-        ![Local Image](/Theory/images/chapter4/5.PNG)
+        ![Local Image](/images/chapter4/5.PNG)
 
         * The chronological integrity is based on the timestamp and ensures that all blocks are connected in a chronological order, forming a secure and tamper-proof chain.
         * Historical record proving when each block and the transaction it contains was added to the blockchain.
@@ -1505,17 +1505,17 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
 
 * Proof of Stake : Nodes are chosen to add the block based on their stake in the network, which might involve holding a certain amount of the blockchain's currency.
 
-![Local Image](/Theory/images/chapter4/6.PNG)
+![Local Image](/images/chapter4/6.PNG)
 
 * How many transactions per Block ?
     - average amount of transactions per Block for Bitcoin
     
-    ![Local Image](/Theory/images/chapter4/7.PNG)
+    ![Local Image](/images/chapter4/7.PNG)
 
 * How long does it take for a transaction to be added to the blockchain ?
     - median time for a transaction to be accepted and added (Bitcoin)
 
-    ![Local Image](/Theory/images/chapter4/8.PNG)
+    ![Local Image](/images/chapter4/8.PNG)
 
 #### Use Cases Blockchain
 
@@ -1527,7 +1527,7 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
         * Blockchain is e.g., Ethereum
     - stimulates trusted third party with shared state
 
-    ![Local Image](/Theory/images/chapter4/9.PNG)
+    ![Local Image](/images/chapter4/9.PNG)
 
 * Original definition
     - N. Szabo.  The Idea of Smart Contracts. 1994
@@ -1569,7 +1569,7 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
 * Medical Data Sharing
     - S. Rouhani, L. Butterworth A. D. Simmons, D. G. Humphery, R. Deters.  MediChainTM: A Secure Decentralized Medical Data Asset Management System.  In Proc. IEEE International Conference on Computer and Information Technology.  July/August 2018.
 
-    ![Local Image](/Theory/images/chapter4/10.PNG)
+    ![Local Image](/images/chapter4/10.PNG)
 * Audible access control
     - integration of a traditional access control system with Blockchain technology
     - access control policies are implemented as smart contract
@@ -1578,7 +1578,7 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
 * Hierarchical access control on IoT
     - M. Ma, G. Shi, F. Li.  Privacy-Oriented Blockchain-Based Distributed Key Management Architecture for Hierarchical Access Control in the IoT
 
-    ![Local Image](/Theory/images/chapter4/11.PNG) 
+    ![Local Image](/images/chapter4/11.PNG) 
 
 **Food Traceability**
 
@@ -1603,7 +1603,7 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
         * uses a mobile phone to scan a QR code associated with some food item
         * see in details all information associated with the product, from the producer and provider till the retail store
     
-    ![Local Image](/Theory/images/chapter4/12.PNG) 
+    ![Local Image](/images/chapter4/12.PNG) 
 * In summary
     - actors benefit from a decentralized and trusted information repository
     - IoT devices take advantage of decentralized infrastructure and provide cryptographically signed representation of physical assets
@@ -1613,7 +1613,7 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
 * 3 layer architecture : <ins>**AgriBlockIoT**</ins>
     - M. P. Caro, M. S. Ali, M. Vecchio, R. Giaffreda.  Blockchain-based Traceability in Agri-Food Supply Chain Management: A Practical Implementation.  In Proc. IoT Vertical and Topical Summit for Agriculture.  May 2018.
 
-    ![Local Image](/Theory/images/chapter4/13.PNG)
+    ![Local Image](/images/chapter4/13.PNG)
 
 ### Chapter 5 Securing Bitcoin
 
@@ -1687,15 +1687,15 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
 
 * Example : view from a block explorer
 
-![Local Image](/Theory/images/chapter5/1.PNG)
+![Local Image](/images/chapter5/1.PNG)
 
 * Example : a decoded transaction
 
-![Local Image](/Theory/images/chapter5/2.PNG)
+![Local Image](/images/chapter5/2.PNG)
 
 * Transactions form a chain : output $\rightarrow$ input
 
-![Local Image](/Theory/images/chapter5/3.PNG)
+![Local Image](/images/chapter5/3.PNG)
 
 **Format**
 
@@ -1719,7 +1719,7 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
         * an amount of Bitcoin to be transferred and to whom
         * a scriptPubKey, which is a script setting the conditions that must be met to spend the output in the future. It often includes the recipient's puublic key hash.
 
-![Local Image](/Theory/images/chapter5/4.PNG)
+![Local Image](/images/chapter5/4.PNG)
 
 * <ins>**Locktime**</ins>
     - the earliest time that a transaction is valid and can be relayed on the network or added to the blockchain
@@ -1743,7 +1743,7 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
         * sometimes called witness script or scriptPubKey
 * Example
 
-![Local Image](/Theory/images/chapter5/5.PNG)
+![Local Image](/images/chapter5/5.PNG)
 
 * Bitcoin full nodes track all available and spendable outputs
     - <ins>**unspent transaction outputs**</ins>
@@ -1780,11 +1780,11 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
 
 * Example
 
-![Local Image](/Theory/images/chapter5/6.PNG)
+![Local Image](/images/chapter5/6.PNG)
 
 **Transactions Chain**
 
-![Local Image](/Theory/images/chapter5/7.PNG)
+![Local Image](/images/chapter5/7.PNG)
 
 * How to generate the first transaction ?
     - <ins>**coinbase transaction**</ins>
@@ -1823,7 +1823,7 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
 
 * Encoding numbers with different digit sets
 
-![Local Image](/Theory/images/chapter5/8.PNG)
+![Local Image](/images/chapter5/8.PNG)
 
 * Conversion of a string to Base58
     - S. Nakamoto, M. Sporny.  The Base58 Encoding Scheme.  Internet Engineering Task Force.  Internet Draft (Work in Progress) draft-msporny-base58-03.  March 2021.
@@ -1838,20 +1838,20 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
     - The RIPEMD160 creates a 160 bits, 20 bytes string that is then encoded using Base58. It is a shorter and more readable format.
     - This produces the final Bitcoin address.
 
-    ![Local Image](/Theory/images/chapter5/9.PNG)
+    ![Local Image](/images/chapter5/9.PNG)
 
 * A closer look at Base58 encoding step
 
-![Local Image](/Theory/images/chapter5/10.PNG)
+![Local Image](/images/chapter5/10.PNG)
 
 * Version
     - See [List of address prefixes](https://en.bitcoin.it/wiki/List_of_address_prefixes) for details
 
-    ![Local Image](/Theory/images/chapter5/11.PNG)
+    ![Local Image](/images/chapter5/11.PNG)
 
 * Full example
 
-![Local Image](/Theory/images/chapter5/12.PNG)
+![Local Image](/images/chapter5/12.PNG)
 
 **Motivation**
 
@@ -1882,7 +1882,7 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
     - combining means concatenate scriptSig and scriptPubKey prior to script validation
 * Example
 
-![Local Image](/Theory/images/chapter5/13.PNG)
+![Local Image](/images/chapter5/13.PNG)
 * Both scriptSig and scriptPubKey are written in SCRIPT
 * All nodes validate all transactions before propagating them further
 * A transaction is valid if
@@ -1943,9 +1943,9 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
     - The stack outputs `true`, verifying that the transaction conditions have been met and the transaction can be spent.
 
 
-![Local Image](/Theory/images/chapter5/14.PNG)
+![Local Image](/images/chapter5/14.PNG)
 
-![Local Image](/Theory/images/chapter5/15.PNG)
+![Local Image](/images/chapter5/15.PNG)
 
 * Interactive SCRIPT playground
     - https://siminchen.github.io/bitcoinIDE/build/editor.html
@@ -1955,7 +1955,7 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
     - https://ide.bitauth.com/
 * Operators
 
-![Local Image](/Theory/images/chapter5/16.PNG)
+![Local Image](/images/chapter5/16.PNG)
 
 **Standard Transaction Script**
 
@@ -1971,20 +1971,20 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
     - $\textcolor{blue}{scriptSig}$ include the signature
     - $\textcolor{green}{scriptPubKey}$ include the public key
 
-    ![Local Image](/Theory/images/chapter5/17.PNG)
+    ![Local Image](/images/chapter5/17.PNG)
 2. <ins>**Pay-to-Public-Key-Hash**</ins> (P2PKH)
     - uses addresses instead of public key
     - address is 25 bytes (checksum included), included in the $\textcolor{green}{scriptPubKey}$
     - public keys are revealed at redemption time by the $\textcolor{blue}{scriptSig}$
 
-    ![Local Image](/Theory/images/chapter5/18.PNG)
+    ![Local Image](/images/chapter5/18.PNG)
 3. <ins>**Null Data**</ins> (`OP_RETURN`)
     - 80 bytes of data are allowed after `OP_RETURN`
     - `OP_RETURN` fores the failure of any script including it
         * the associated transaction output cannot be spent
     - the transaction output is provably unspendable (pruned from the UTXO pool)
 
-    ![Local Image](/Theory/images/chapter5/19.PNG)
+    ![Local Image](/images/chapter5/19.PNG)
 4. <ins>**Pay-to-Multi-Sig**</ins> (P2MS)
     - multiple agents control coins, in a joint way
     - M signatures out of N possible signers are required to spend the transaction output
@@ -1995,7 +1995,7 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
         * a multisignature scriptPubKey is bigger than the P2PKH one
         * beneficial for receiver (expensive for the sender in termes of transaction fee)
     
-    ![Local Image](/Theory/images/chapter5/20.PNG)
+    ![Local Image](/images/chapter5/20.PNG)
 
 * There exist
     - other standard scripts
@@ -2013,21 +2013,21 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
 
 * Traditional contract
 
-![Local Image](/Theory/images/chapter6/1.PNG)
+![Local Image](/images/chapter6/1.PNG)
 
 * Smart Contract
 
-![Local Image](/Theory/images/chapter6/2.PNG)
+![Local Image](/images/chapter6/2.PNG)
 
 * Digital currencies
     - just one Blockchain application
 
-    ![Local Image](/Theory/images/chapter6/3.PNG)
+    ![Local Image](/images/chapter6/3.PNG)
 
 * <ins>**Smart contracts**</ins>
     - user-defined programs running on top of a Blockchain
 
-    ![Local Image](/Theory/images/chapter6/4.PNG)
+    ![Local Image](/images/chapter6/4.PNG)
 
 * Now
     - Blockchain
@@ -2047,7 +2047,7 @@ The <ins>**authentication**</ins> process involves a chain of trust established 
 
 * Web 2.0 : System view
 
-![Local Image](/Theory/images/chapter6/5.PNG)
+![Local Image](/images/chapter6/5.PNG)
 
 * Web 3.0 : System view
 
@@ -2082,7 +2082,7 @@ Once the transaction is confirmed by the network, the result is recorded on the 
 
 The front-end retrieves the transaction result from the Blockchain (via a node provider) and updtes the user interface to reflect the change.
 
-![Local Image](/Theory/images/chapter6/6.PNG)
+![Local Image](/images/chapter6/6.PNG)
 
 **Generalities**
 
@@ -2120,7 +2120,7 @@ The front-end retrieves the transaction result from the Blockchain (via a node p
         * executed when triggered by a transaction from a user
 * Interacting with Ethereum
     
-![Local Image](/Theory/images/chapter6/7.PNG)
+![Local Image](/images/chapter6/7.PNG)
 
 * An Ethereum client allows you to run an Ethereum Node on your computer
 * An Ethereum client can
@@ -2145,7 +2145,7 @@ The front-end retrieves the transaction result from the Blockchain (via a node p
     - Storage : The persistent storage of the account, used by smart contracts to store data.
     - Input data : the data sent along with a transaction. For smart contracts, this data often includes the function to be executed and the parameters for that function.
 
-![Local Image](/Theory/images/chapter6/8.PNG)
+![Local Image](/images/chapter6/8.PNG)
 
 * A zoom in the EVM
     - Machine State (Volatile)
@@ -2162,7 +2162,7 @@ The front-end retrieves the transaction result from the Blockchain (via a node p
     - Account Storage
         * Storage is a persistent key-vallue store associated with an Ethereum account.
 
-![Local Image](/Theory/images/chapter6/9.PNG)
+![Local Image](/images/chapter6/9.PNG)
 
 * <ins>**Stack**</ins>
     - Last-In-First-Out principle
@@ -2183,7 +2183,7 @@ The front-end retrieves the transaction result from the Blockchain (via a node p
     - the hash accumulator refers to the Merkle root which is a single hash that represents the entire structure of the trie.
     - When a smart contract stores data in the EVM, each key-value pair is stored in the contract' storage trie. The storage trie is updated, and its root hash changes. The new root hash of the storage trie is then stored in the account's node in the state trie. The state trie is updated, and its root hash changes, resulting in a new state root for the Blockchain.
 
-    ![Local Image](/Theory/images/chapter6/10.PNG)
+    ![Local Image](/images/chapter6/10.PNG)
 
 A Trie (pronounced "try") is a type of search tree—a data structure used for locating specific keys from within a set. These keys are usually strings. The name "Trie" comes from the word "retrieval."
 
@@ -2211,15 +2211,15 @@ Tries are particularly useful for applications involving a large set of strings,
     - command-line tool
 * Interaction with EVM
 
-![Local Image](/Theory/images/chapter6/11.PNG)
+![Local Image](/images/chapter6/11.PNG)
 
-![Local Image](/Theory/images/chapter6/12.PNG)
+![Local Image](/images/chapter6/12.PNG)
 
 **Basic Structure**
 
 * Storage example
 
-![Local Image](/Theory/images/chapter6/13.PNG)
+![Local Image](/images/chapter6/13.PNG)
 
 **State Variables**
 
@@ -2231,7 +2231,7 @@ Tries are particularly useful for applications involving a large set of strings,
 
 * Reference type
 
-![Local Image](/Theory/images/chapter6/14.PNG)
+![Local Image](/images/chapter6/14.PNG)
 
 **EVM Data Store**
 
@@ -2242,9 +2242,9 @@ Tries are particularly useful for applications involving a large set of strings,
     - needs to be stated exlicitly when declaring the variable
 * Local variables of value types (reside on stack)
 
-![Local Image](/Theory/images/chapter6/15.PNG)
+![Local Image](/images/chapter6/15.PNG)
 
-![Local Image](/Theory/images/chapter6/16.PNG)
+![Local Image](/images/chapter6/16.PNG)
 
 * What is `asset[0].name` ?
     - Storage : persistent storage, data stored here remains on the Blockchain
@@ -2255,11 +2255,11 @@ Tries are particularly useful for applications involving a large set of strings,
 
 * Syntax
 
-![Local Image](/Theory/images/chapter6/17.PNG)
+![Local Image](/images/chapter6/17.PNG)
 
 * Example
 
-![Local Image](/Theory/images/chapter6/18.PNG)
+![Local Image](/images/chapter6/18.PNG)
 
 **Visibility**
 
@@ -2295,7 +2295,7 @@ Tries are particularly useful for applications involving a large set of strings,
     - receive ETH
     - use the value of ETH in its internal calculations
 
-    ![Local Image](/Theory/images/chapter6/19.PNG)
+    ![Local Image](/images/chapter6/19.PNG)
 
 **Abstract Contract**
 
@@ -2304,13 +2304,13 @@ Tries are particularly useful for applications involving a large set of strings,
 * `override`
     - modifies the inherited function
 
-    ![Local Image](/Theory/images/chapter6/20.PNG)
+    ![Local Image](/images/chapter6/20.PNG)
 
 **Methods Call**
 
 * How to call methods from other contracts ?
 
-![Local Image](/Theory/images/chapter6/21.PNG)
+![Local Image](/images/chapter6/21.PNG)
 
 #### Attacks
 
@@ -2323,15 +2323,15 @@ Tries are particularly useful for applications involving a large set of strings,
 
 * Overflow
 
-![Local Image](/Theory/images/chapter6/22.PNG)
+![Local Image](/images/chapter6/22.PNG)
 
 * Underflow
 
-![Local Image](/Theory/images/chapter6/23.PNG)
+![Local Image](/images/chapter6/23.PNG)
 
 * Example
 
-![Local Image](/Theory/images/chapter6/24.PNG)
+![Local Image](/images/chapter6/24.PNG)
 
 Yes, the `lockTime` variable in the `TimeLock` contract can be instrumented to overflow, which would allow a user to withdraw their funds prematurely.
 
@@ -2353,7 +2353,7 @@ After the overflow, the user can call the `withdraw` function. Due to the overfl
 
 * Code for the attack
 
-![Local Image](/Theory/images/chapter6/25.PNG)
+![Local Image](/images/chapter6/25.PNG)
 
 * How to protect ?
     - use Solidity compiler $\geq$ 0.8
@@ -2372,14 +2372,14 @@ After the overflow, the user can call the `withdraw` function. Due to the overfl
 
 * Attack Illustration
 
-![Local Image](/Theory/images/chapter6/26.PNG)
+![Local Image](/images/chapter6/26.PNG)
 
 * Victim Contract
     - The `deposit` function allows users to deposit ETH and updates their balance
     - The `withdraw` function allows users to withdraw their deposited ETH. However, it updates the balance after sending ETH, making it vulnerable to reentrancy attacks.
     - The `getBalance` function returns the contract's balance.
 
-![Local Image](/Theory/images/chapter6/27.PNG)
+![Local Image](/images/chapter6/27.PNG)
 
 * Attacker Contract
     - The `Attack` contract interacts with the `EtherStore` contract.
@@ -2388,7 +2388,7 @@ After the overflow, the user can call the `withdraw` function. Due to the overfl
     - The `fallback` function is called when the `EtherStore` contract sends ETH back to the `Attack` contract. It re-invokes the `withdraw` function, causing the reentrancy loop.
     - The `getBalance` function returns the balance of the `Attack` contract.
 
-![Local Image](/Theory/images/chapter6/28.PNG)
+![Local Image](/images/chapter6/28.PNG)
 
 The reentrancy attack allows an attacker to drain the funds from a vulnerable contract by recursively calling the withdraw function before the original call completes its execution. This is due to the order of operations in the victim contract, where the balance is updated after the withdrawal, allowing multiple withdrawals with a single deposit.
 
