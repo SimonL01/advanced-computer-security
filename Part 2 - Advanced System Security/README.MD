@@ -126,6 +126,7 @@ Pretty much everything is done because absolutely nothing is trusted on the remo
     - EPC is essentially a set of pages in PRM to be used by the enclaves
     
     ![Local Image](/images/trusted/T3.PNG)
+
     - How big is the PRM in general ? It depends on how many enclaves you want to support. You can configure how many enclaves you want to support (this is configurable) but if you are a cloud provider that is making a business out of providing trusted computing platform that could run into the multi gigabits but if the use of enclaves is fairly rare, then it could a few Kbits to Mbits. Configurable by the CPU. Priviledge memory was also configurable as a reminders
 
 Remember that L1 cache is typically 32 Kb to 64 KB per core. L2 cache is typically 256 KB to 1 MB per core and L3 cache is typically 2 MB to 64 MB shared among cores in a CPU.
@@ -360,23 +361,29 @@ ACtually, the Meltdown attack is an attack on the speculative execution engine.
     - We have this kind of very simple piece of code where we have 6 instructions that don't that much but illustrate the point. If values are in registers and we can do one operation per CPU cycle, then this code will take 6 cycles.
 
     ![Local Image](/images/channels/C4.PNG)
+
     - We could go "superscalar" if we have several execution units and use only 3 cycles if values are in registers and two opertions can be done per cycle.
     - A superscalar processor is an advanced type of CPU architecture that aims to exploit instruction-level parallelism by executing multiple instructions simultaneously within a single clock cycle. It achieves this through multiple execution units, dynamic scheduling, and techniques to handle instruction dependencies. While it offers significant performance advantages, the complexity and diminishing returns present challenges in its design and implementation.
 
     ![Local Image](/images/channels/C5.PNG)
+
     - This works of course if the first pipeline has no dependency between variables or values of first operations and the other operations' variables and value.
 
     ![Local Image](/images/channels/C6.PNG)
+
     - But if you look in the second line, one instruction compute v and the second one uses the result of the computation of v but you can't use values while you are computing it.
 
     ![Local Image](/images/channels/C7.PNG)
+
     - What you can do is differ the execution to run in parallel with another non interfering execution
 
     ![Local Image](/images/channels/C8.PNG)
+
     - But then you have two iddle pipeline slots and it is not that great as the pipeline isn't full but still, you reduce from 6 to 4 cycles.
     - But there are no dependies between certains executions
 
     ![Local Image](/images/channels/C9.PNG)
+    
     - You could move some instructions to empty slots of previous stages and so on.
     - You can execute the code in 3 cycles. You have to execute the instructions in a out-of-order way.
     - Every modern, CPU or a lot of them, uses those techniques and execute code out-of-order. But all the instructions must be shown in order so that as a user and a programmer, you actually don't see that those instructions are executed out-of-order. What you get is that the code that otherwise would have taken 6 cycles has taken 3 cycles to be executed. You have a big performance gain.
