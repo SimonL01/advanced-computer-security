@@ -392,6 +392,8 @@ ACtually, the Meltdown attack is an attack on the speculative execution engine.
 * Branch Prediction
     - Speculating CPUs try to make a guess to know whether a branch is taken a not and once they have taken the guess, they just keep speculating following their guess. If the guess is right, then it is great because they will have gone ahead and executed the right piece of code but if the guess is wrong then what needs to be done is to flush the pipeline because we have been doing useless work and then resume the execution in the correct branch which is the other branch then the one where we decided to go.
 
+![Local Image](/images/channels/C11.PNG)
+
 * Speculative Execution
     - Without speculation on the branch, 7 cycles needed to execute the piece of code
 
