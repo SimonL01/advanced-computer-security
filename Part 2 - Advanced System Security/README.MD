@@ -404,7 +404,7 @@ ACtually, the Meltdown attack is an attack on the speculative execution engine.
     - The way it works is that while it is speculating, you can be using temporary registers and when you commit the instructions because you speculated right, you essentially copy those temporary registers into the normal registers. Actually, you mark the temporary registers that have the speculated results as acting as the normal registers.
     - If you take a bad guess, you speculatively execute the instructions but then when you finally resolve the value of the condition, if it is false, in this case you speculated wrong, you went into the branch but we aren't going into the branch and what you do is just discard the results of the speculation, flush the pipeline to remove all traces of the bad speculation and go and fetch the next instruction.
 
-    ![Local Image](/images/channels/C13.PNG)
+    ![Local Image](Theory/images/channels/C13.PNG)
 
 #### Virtual Address Space
 
