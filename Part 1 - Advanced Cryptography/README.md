@@ -337,7 +337,7 @@ Example of a Chosen Ciphertext Attack on RSA :
     - The <ins>**One-Parameter Forgery**</ins>
         * D. Pointcheval, J. Stern.  Security Proofs for Signature Schemes.  In Proc. EUROCRYPT.  May 1996
     
-    ![Local Image](/images/chapter1/8.PNG)
+     ![Local Image](/images/chapter1/8.PNG)
 
     - The <ins>**Two-Parameter Forgery**</ins>
         ![Local Image](/images/chapter1/9.PNG)
