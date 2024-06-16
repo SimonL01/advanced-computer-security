@@ -57,7 +57,7 @@ Problem : In the digital world, anyone can copy anyone's signature from one docu
 
 Solution : Make the signature depend on document
 
-![Local Image](images/chapter1/1.PNG)
+![Local Image](advanced-computer-security/Theory/images/chapter1/1.PNG)
 
 **Model Syntax**
 
