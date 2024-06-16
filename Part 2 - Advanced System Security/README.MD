@@ -392,15 +392,15 @@ ACtually, the Meltdown attack is an attack on the speculative execution engine.
 * Branch Prediction
     - Speculating CPUs try to make a guess to know whether a branch is taken a not and once they have taken the guess, they just keep speculating following their guess. If the guess is right, then it is great because they will have gone ahead and executed the right piece of code but if the guess is wrong then what needs to be done is to flush the pipeline because we have been doing useless work and then resume the execution in the correct branch which is the other branch then the one where we decided to go.
 
-![Local Image](/images/channels/C11.PNG)
-
 * Speculative Execution
     - Without speculation on the branch, 7 cycles needed to execute the piece of code
 
     ![Local Image](/images/channels/C11.PNG)
+
     - With Speculation and if we take a good guess
 
     ![Local Image](/images/channels/C12.PNG)
+    
     - Our guess, the code inside the branch will be executed. You can execute that code at the same time as the code that is before the branch because there are actually no dependencies between different instructions.
     - Once you know whether v is equal to 0, you can commit the result of those speculative executions.
     - The way it works is that while it is speculating, you can be using temporary registers and when you commit the instructions because you speculated right, you essentially copy those temporary registers into the normal registers. Actually, you mark the temporary registers that have the speculated results as acting as the normal registers.
