@@ -339,8 +339,7 @@ Example of a Chosen Ciphertext Attack on RSA :
     
         ![Local Image](/images/chapter1/8.PNG)
 
-    - The <ins>**Two-Parameter Forgery**</ins>
-        ![Local Image](/images/chapter1/9.PNG)
+    - The <ins>**Two-Parameter Forgery**</ins> ![Local Image](/images/chapter1/9.PNG)
 
 3. Of course, hashing the message prevents forgeries, same as extended RSA signature.
 
