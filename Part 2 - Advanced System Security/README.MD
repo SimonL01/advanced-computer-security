@@ -326,7 +326,7 @@ Actually, the Meltdown attack is an attack on the speculative execution engine.
 * CPU basics
     - A long, long time ago, CPUs were following a very simple fetch, decode, execute cycle for instructions
 
-    ![Local Image](/../images/channels/C1.PNG)
+    ![Local Image](images/channels/C1.PNG)
     
     - Of course, that was not that efficient and you can get much more efficiency by doing pipelining where while you fetch, you are decoding previous instruction and executing the instruction before that. We saw in computation structures the classic pipeline architecture.
 
